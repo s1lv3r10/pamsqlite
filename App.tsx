@@ -5,7 +5,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import Home from './components/Home';
-import User from './components/User';
+
 
 import { BottomTabParams } from './utils/types';
 import { ContainerStyles, MainTheme, ThemeType } from './utils/styles';
@@ -66,16 +66,6 @@ function RootStack() {
           title: 'Página Inicial',
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="home" color={color} size={size} />
-          ),
-        }}
-      />
-      <Stack.Screen
-        name="User"
-        component={User}
-        options={{
-          title: 'Editar dados',
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="account" color={color} size={size} />
           ),
         }}
       />

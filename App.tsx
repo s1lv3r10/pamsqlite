@@ -36,7 +36,7 @@ function RootStack() {
       id="Nav"
       screenOptions={{
         headerStyle: {
-          backgroundColor: theme.colors.vermelhoPrincipal,
+          backgroundColor: theme.colors.azulPrincipal,
           height: 85,
         },
         headerTintColor: theme.colors.onPrimary ?? '#fff',
@@ -48,7 +48,7 @@ function RootStack() {
         headerTitle: () => <HeaderTitle />, // 🔥 Aqui define header padrão
 
         tabBarStyle: {
-          backgroundColor: theme.colors.vermelhoPrincipal,
+          backgroundColor: theme.colors.azulPrincipal,
           height: 55,
         },
         tabBarActiveTintColor: theme.colors.onPrimary ?? '#fff',
@@ -63,9 +63,9 @@ function RootStack() {
         name="Home"
         component={Home}
         options={{
-          title: 'Página Inicial',
+          title: 'Livros',
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="home" color={color} size={size} />
+            <MaterialCommunityIcons name="book-open-blank-variant" color={color} size={size} />
           ),
         }}
       />
@@ -73,7 +73,7 @@ function RootStack() {
         name='Start'
         component={Start}
         options={{
-          title: 'Inserir dados',
+          title: 'Usuários',
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="account" color={color} size={size} />
           ),

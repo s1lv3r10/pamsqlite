@@ -1,5 +1,5 @@
 import { View, ScrollView, ImageBackground } from "react-native";
-import { Text, useTheme, Card, Button, TouchableRipple } from "react-native-paper";
+import { Text, useTheme, Card, Button, TouchableRipple, IconButton } from "react-native-paper";
 import { ContainerStyles, ThemeType } from '../utils/styles';
 import { HomeNavProps } from "../utils/types";
 
@@ -24,14 +24,26 @@ export default function Home({ navigation }: HomeNavProps) {
                             <Text variant="bodyMedium" style={ContainerStyles.cardText}>
                                 Lorem Ipsum
                             </Text>
+                            <View style={{ flexDirection: "row" }}>
+                                <IconButton
+                                    icon="pencil"
+                                    iconColor="#02047eff"
+                                    //onPress={{}}
+                                />
+                                <IconButton
+                                    icon="delete"
+                                    iconColor="red"
+                                    //onPress={{}}
+                                />
+                            </View>
                         </Card.Content>
                         <Card.Cover source={{ uri: 'https://picsum.photos/700' }} />
                         <Card.Actions style={{ justifyContent: 'center' }}>
                             <Button
                                 mode="outlined"
-                                textColor={theme.colors.vermelhoPrincipal}
+                                textColor={theme.colors.azulPrincipal}
                                 style={{
-                                    borderColor: theme.colors.vermelhoPrincipal,
+                                    borderColor: theme.colors.azulPrincipal,
                                     borderWidth: 1,
                                     paddingHorizontal: 20,
                                 }}
@@ -48,49 +60,10 @@ export default function Home({ navigation }: HomeNavProps) {
                         labelStyle={{ fontSize: 16 }}
                         onPress={() => navigation.navigate('Home')}
                     >
-                        Veja todos os livros
+                        Adicionar Livros
                     </Button>
 
                     <View style={ContainerStyles.horizontalRule} />
-
-                    {/* Últimos Eventos */}
-                    <View style={{ flex: 1, padding: 10 }}>
-                        <View style={ContainerStyles.Topo}>
-                            <Text style={ContainerStyles.Title}>Lorem Ipsum</Text>
-                            <Text style={ContainerStyles.subTitle}>
-                                "Lorem ipsum dolor sit amet
-                            </Text>
-                        </View>
-                        <TouchableRipple onPress={() => navigation.navigate('Home')} borderless>
-                            <Card style={ContainerStyles.cardNews}>
-                                <Card.Content>
-                                    <Text variant="titleMedium" style={ContainerStyles.cardText}>
-                                         consectetur adipiscing elit
-                                    </Text>
-                                </Card.Content>
-                            </Card>
-                        </TouchableRipple>
-
-                        <TouchableRipple onPress={() => navigation.navigate('Home')} borderless>
-                            <Card style={ContainerStyles.cardNews}>
-                                <Card.Content>
-                                    <Text variant="titleMedium" style={ContainerStyles.cardText}>
-                                         consectetur adipiscing elit
-                                    </Text>
-                                </Card.Content>
-                            </Card>
-                        </TouchableRipple>
-
-                        <TouchableRipple onPress={() => navigation.navigate('Home')} borderless>
-                            <Card style={ContainerStyles.cardNews}>
-                                <Card.Content>
-                                    <Text variant="titleMedium" style={ContainerStyles.cardText}>
-                                         consectetur adipiscing elit
-                                    </Text>
-                                </Card.Content>
-                            </Card>
-                        </TouchableRipple>
-                    </View>
                 </ScrollView>
             </ImageBackground>
         </View>

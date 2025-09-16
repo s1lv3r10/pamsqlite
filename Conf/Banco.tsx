@@ -2,7 +2,7 @@ import * as SQLite from "expo-sqlite";
 
 // abrir conexão
 export async function Conexao() {
-  const db = await SQLite.openDatabaseAsync("pambanco.db");
+  const db = await SQLite.openDatabaseAsync("meubanco5.db");
   console.log("📂 Banco aberto:", db ? "OK" : "Falhou");
   return db;
 }
@@ -73,7 +73,7 @@ export async function createTableLivros(db: SQLite.SQLiteDatabase) {
       ID_LIVRO INTEGER PRIMARY KEY AUTOINCREMENT,
       TITULO TEXT NOT NULL,
       AUTOR TEXT NOT NULL,
-      GENERO TEXT NOT NULL,
+      GENERO TEXT NOT NULL
     );
   `);
   console.log("🛠️ Tabela LIVROS criada/verificada");
@@ -84,14 +84,19 @@ export async function inserirLivro(
   db: SQLite.SQLiteDatabase,
   titulo: string,
   autor: string,
-  genero: string,
+  genero: string
 ) {
-  await db.runAsync(
-    `INSERT INTO LIVROS (TITULO, AUTOR, GENERO) VALUES (?, ?, ?)`,
-    [titulo, autor, genero]
-  );
-  console.log("✅ Livro inserido:", titulo);
+  try {
+    await db.runAsync(
+      `INSERT INTO LIVROS (TITULO, AUTOR, GENERO) VALUES (?, ?, ?)`,
+      [titulo, autor, genero]
+    );
+    console.log("✅ Livro inserido:", titulo);
+  } catch (error) {
+    console.error("❌ Erro ao inserir livro:", error);
+  }
 }
+
 
 // selecionar livros (com alias para o React usar)
 export async function selectLivros(db: SQLite.SQLiteDatabase) {
@@ -100,12 +105,13 @@ export async function selectLivros(db: SQLite.SQLiteDatabase) {
       ID_LIVRO as id,
       TITULO as titulo,
       AUTOR as autor,
-      GENERO as genero,
+      GENERO as genero
     FROM LIVROS
   `);
   console.log("📋 Livros carregados:", result);
   return result;
 }
+
 
 // atualizar livro
 export async function updateLivro(
@@ -113,7 +119,7 @@ export async function updateLivro(
   id: number,
   titulo: string,
   autor: string,
-  genero: string,
+  genero: string
 ) {
   await db.runAsync(
     `UPDATE LIVROS SET TITULO = ?, AUTOR = ?, GENERO = ? WHERE ID_LIVRO = ?`,

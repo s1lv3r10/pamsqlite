@@ -11,7 +11,6 @@ export default function Home() {
     const [titulo, setTitulo] = useState("");
     const [autor, setAutor] = useState("");
     const [genero, setGenero] = useState("");
-    const [editora, setEditora] = useState("");
     const [editId, setEditId] = useState<number | null>(null);
     const [visible, setVisible] = useState(false);
     // abrir e fechar modal
@@ -21,7 +20,6 @@ export default function Home() {
         setTitulo("");
         setAutor("");
         setGenero("");
-        setEditora("");
         setEditId(null);
     };
     // carregar livros
@@ -37,7 +35,7 @@ export default function Home() {
     }, []);
     // salvar ou atualizar
     const handleSalvar = async () => {
-        if (!titulo || !autor || !genero || !editora) {
+        if (!titulo || !autor || !genero) {
             Alert.alert("Erro", "Preencha todos os campos!");
             return;
         }
@@ -45,10 +43,10 @@ export default function Home() {
         if (!db) return;
 
         if (editId) {
-            await updateLivro(db, editId, titulo, autor, genero, editora);
+            await updateLivro(db, editId, titulo, autor, genero);
             Alert.alert("Sucesso", "Livro atualizado!");
         } else {
-            await inserirLivro(db, titulo, autor, genero, editora);
+            await inserirLivro(db, titulo, autor, genero);
             Alert.alert("Sucesso", "Livro cadastrado!");
         }
 
@@ -60,7 +58,6 @@ export default function Home() {
         setTitulo(livro.titulo);
         setAutor(livro.autor);
         setGenero(livro.genero);
-        setEditora(livro.editora);
         setEditId(livro.id);
         openModal();
     };
@@ -161,7 +158,7 @@ export default function Home() {
                             borderRadius: 10,
                         }}
                     >
-                        <ScrollView>
+
                             <Text style={ContainerStyles.cardTitle}>
                                 {editId ? "Editar Livro" : "Cadastrar Livro"}
                             </Text>
@@ -192,15 +189,6 @@ export default function Home() {
                                 value={genero}
                                 onChangeText={setGenero}
                             />
-                            <TextInput
-                                label="Editora"
-                                mode="outlined"
-                                style={ContainerStyles.input}
-                                outlineColor="#02047eff"
-                                activeOutlineColor="#02047eff"
-                                value={editora}
-                                onChangeText={setEditora}
-                            />
                             <Button
                                 mode="contained"
                                 style={ContainerStyles.homeButton}
@@ -210,7 +198,7 @@ export default function Home() {
                             >
                                 {editId ? "Atualizar" : "Cadastrar"}
                             </Button>
-                        </ScrollView>
+
                     </Modal>
                 </Portal>
             </ImageBackground>

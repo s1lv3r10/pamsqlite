@@ -74,7 +74,6 @@ export async function createTableLivros(db: SQLite.SQLiteDatabase) {
       TITULO TEXT NOT NULL,
       AUTOR TEXT NOT NULL,
       GENERO TEXT NOT NULL,
-      EDITORA TEXT NOT NULL
     );
   `);
   console.log("🛠️ Tabela LIVROS criada/verificada");
@@ -86,11 +85,10 @@ export async function inserirLivro(
   titulo: string,
   autor: string,
   genero: string,
-  editora: string
 ) {
   await db.runAsync(
-    `INSERT INTO LIVROS (TITULO, AUTOR, GENERO, EDITORA) VALUES (?, ?, ?, ?)`,
-    [titulo, autor, genero, editora]
+    `INSERT INTO LIVROS (TITULO, AUTOR, GENERO) VALUES (?, ?, ?)`,
+    [titulo, autor, genero]
   );
   console.log("✅ Livro inserido:", titulo);
 }
@@ -103,7 +101,6 @@ export async function selectLivros(db: SQLite.SQLiteDatabase) {
       TITULO as titulo,
       AUTOR as autor,
       GENERO as genero,
-      EDITORA as editora
     FROM LIVROS
   `);
   console.log("📋 Livros carregados:", result);
@@ -117,11 +114,10 @@ export async function updateLivro(
   titulo: string,
   autor: string,
   genero: string,
-  editora: string
 ) {
   await db.runAsync(
-    `UPDATE LIVROS SET TITULO = ?, AUTOR = ?, GENERO = ?, EDITORA = ? WHERE ID_LIVRO = ?`,
-    [titulo, autor, genero, editora, id]
+    `UPDATE LIVROS SET TITULO = ?, AUTOR = ?, GENERO = ? WHERE ID_LIVRO = ?`,
+    [titulo, autor, genero, id]
   );
   console.log("✏️ Livro atualizado:", { id, titulo });
 }

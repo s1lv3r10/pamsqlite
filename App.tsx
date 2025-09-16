@@ -1,15 +1,16 @@
+import { useEffect, useCallback, useState } from 'react';
 import { View, Image, Text } from 'react-native';
 import { PaperProvider, useTheme } from 'react-native-paper';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import * as SplashScreen from 'expo-splash-screen';
 
 import Home from './components/Home';
-
+import Start from './components/Start';
 
 import { BottomTabParams } from './utils/types';
 import { ContainerStyles, MainTheme, ThemeType } from './utils/styles';
-import Start from './components/Start';
 
 const Stack = createBottomTabNavigator<BottomTabParams, 'Nav'>();
 
@@ -45,11 +46,11 @@ function RootStack() {
           fontSize: 25,
         },
         headerTitleAlign: 'center',
-        headerTitle: () => <HeaderTitle />, // 🔥 Aqui define header padrão
+        headerTitle: () => <HeaderTitle />,
 
         tabBarStyle: {
           backgroundColor: theme.colors.azulPrincipal,
-          height: 55,
+          height: 70,
         },
         tabBarActiveTintColor: theme.colors.onPrimary ?? '#fff',
         tabBarInactiveTintColor: theme.colors.onPrimary ?? '#fff',
@@ -83,12 +84,38 @@ function RootStack() {
   );
 }
 
+// ⏳ Splash control
+SplashScreen.preventAutoHideAsync();
+
 export default function App() {
+  const [appReady, setAppReady] = useState(false);
+
+  useEffect(() => {
+    const prepare = async () => {
+      // Simula carregamento de recursos (ex: fontes, dados)
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      setAppReady(true);
+    };
+    prepare();
+  }, []);
+
+  const onLayoutRootView = useCallback(async () => {
+    if (appReady) {
+      await SplashScreen.hideAsync();
+    }
+  }, [appReady]);
+
+  if (!appReady) {
+    return null; // Splash continua visível
+  }
+
   return (
-    <NavigationContainer>
-      <PaperProvider theme={MainTheme}>
-        <RootStack />
-      </PaperProvider>
-    </NavigationContainer>
+    <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
+      <NavigationContainer>
+        <PaperProvider theme={MainTheme}>
+          <RootStack />
+        </PaperProvider>
+      </NavigationContainer>
+    </View>
   );
 }
